@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#C8FED709</color>
+    <color name="colorPrimaryDark">#C8FED709</color>
+    <color name="colorAccent">@android:color/darker_gray</color>
+</resources>
