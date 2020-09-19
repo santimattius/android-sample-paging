@@ -10,10 +10,9 @@ class TvPagingSource(private val client: TheMovieDbClient) : PagingSource<Int, T
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Tv> {
         return try {
-            // Start refresh at page 1 if undefined.
             val nextPage = params.key ?: 1
             val response = client.getTvPopular(nextPage)
-            delay(2000)
+            delay(2000) //delay to show paging indicator
             LoadResult.Page(
                 data = response.results.map { it.asDomainModel() },
                 prevKey = if (nextPage == 1) null else nextPage - 1,
