@@ -1,9 +1,9 @@
-package com.santimattius.paging.data.source
+package com.santimattius.paging.data.datasources
 
 import androidx.paging.PagingSource
 import com.santimattius.moviedb.TheMovieDbClient
 import com.santimattius.paging.data.data.asDomainModel
-import com.santimattius.paging.domain.Tv
+import com.santimattius.paging.domain.entities.Tv
 import kotlinx.coroutines.delay
 
 class TvPagingSource(private val client: TheMovieDbClient) : PagingSource<Int, Tv>() {
