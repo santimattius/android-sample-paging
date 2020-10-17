@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.MainActivity">
+    tools:context=".ui.activities.MainActivity">
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment"
-        android:name="com.santimattius.paging.ui.PopularTvShowsFragment"
+        android:name="com.santimattius.paging.ui.fragments.PopularTvShowsFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         tools:layout="@layout/fragment_popular_tv_shows"

@@ -1,4 +1,4 @@
-package com.santimattius.paging.domain
+package com.santimattius.paging.domain.entities
 
 data class Tv(
     val id: Int,

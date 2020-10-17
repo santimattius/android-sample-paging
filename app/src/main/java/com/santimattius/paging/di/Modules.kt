@@ -2,10 +2,13 @@ package com.santimattius.paging.di
 
 import com.santimattius.moviedb.TheMovieDbClient
 import com.santimattius.paging.BuildConfig
-import com.santimattius.paging.data.repositories.TvShowRepository
-import com.santimattius.paging.data.source.TvPagingSource
-import com.santimattius.paging.ui.PopularTvShowsFragment
-import com.santimattius.paging.ui.PopularTvShowsViewModel
+import com.santimattius.paging.data.datasources.TvPagingSource
+import com.santimattius.paging.data.datasources.factory.TvPagingSourceFactory
+import com.santimattius.paging.data.repositories.TvShowRepositoryImpl
+import com.santimattius.paging.domain.repositories.TvShowRepository
+import com.santimattius.paging.domain.usescases.GetPopularTvShows
+import com.santimattius.paging.ui.fragments.PopularTvShowsFragment
+import com.santimattius.paging.ui.viewmodels.PopularTvShowsViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -28,10 +31,15 @@ private val theMovieDBModule = module {
 
 private val appModule = module {
     factory { TvPagingSource(get()) }
+    single { TvPagingSourceFactory(get()) }
 }
 
 private val dataModule = module {
-    factory { TvShowRepository(get()) }
+    factory<TvShowRepository> { TvShowRepositoryImpl(get()) }
+}
+
+private val usesCasesModules = module {
+    factory { GetPopularTvShows(get()) }
 }
 
 private val scopesModule = module {
@@ -41,4 +49,5 @@ private val scopesModule = module {
 }
 
 
-internal val modules = listOf(appModule, dataModule, scopesModule, theMovieDBModule)
+internal val modules =
+    listOf(appModule, dataModule, usesCasesModules, scopesModule, theMovieDBModule)
