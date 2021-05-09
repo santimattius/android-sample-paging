@@ -15,7 +15,7 @@ Sample implementation Paging 3.0 Library from Jetpack Component with clean archi
 - **Retrofit** with service client implementation: 
   - https://square.github.io/retrofit/
 - **Moshi** on json parser:
-  -https://github.com/square/moshi
+  - https://github.com/square/moshi
 - **Glide** with image loader:
   - https://github.com/bumptech/glide
 - **Kotlin coroutines** and **Kotlion Flow**
