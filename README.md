@@ -1,5 +1,5 @@
-# android-sample-paging
-Android Paging 3.0 codelab
+# Android Paging 3.0
+
 
 ## Description
 Sample implementation Paging 3.0 Library from Jetpack Component with clean architecture, using TheMovieDb API https://developers.themoviedb.org/4/getting-started/
