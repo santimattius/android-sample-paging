@@ -7,13 +7,13 @@ def localProperties = new Properties()
 localProperties.load(new FileInputStream(rootProject.file("local.properties")))
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.3"
+    compileSdkVersion 30
+    buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "com.santimattius.paging"
         minSdkVersion 16
-        targetSdkVersion 29
+        targetSdkVersion 30
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -38,28 +38,31 @@ android {
         }
     }
 
-    buildFeatures {
-        viewBinding = true
+    viewBinding {
+        enabled = true
     }
+
 }
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
+    //modules
+    implementation project(path: ':moviedb')
+
     //base
     implementation "androidx.core:core-ktx:$core_ktx_version"
     implementation "androidx.appcompat:appcompat:$appcompat_version"
     implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
+    implementation "androidx.legacy:legacy-support-v4:$support_legacy_v4"
 
     //lifecycle
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_extensions_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$viemodels_ktx_version"
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_extensions_version"
 
     //glide version
     implementation "com.github.bumptech.glide:glide:$glide_version"
-    implementation project(path: ':moviedb')
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     kapt "com.github.bumptech.glide:compiler:$glide_version"
 
     //retrofit
@@ -76,8 +79,8 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_coroutines_version"
 
     //paging
-    def paging_version = "3.0.0-alpha06"
-    implementation "androidx.paging:paging-runtime:$paging_version"
+    def paging_version = "3.1.0-alpha03"
+    implementation "androidx.paging:paging-runtime-ktx:$paging_version"
 
     // Koin for Android
     implementation "org.koin:koin-android:$koin_version"
@@ -87,10 +90,5 @@ dependencies {
     implementation "org.koin:koin-androidx-viewmodel:$koin_version"
     // or Koin for Android Fragment Factory (unstable version)
     implementation "org.koin:koin-androidx-fragment:$koin_version"
-
-    //test
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
 }

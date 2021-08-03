@@ -1,6 +1,7 @@
 package com.santimattius.paging.data.datasources
 
 import androidx.paging.PagingSource
+import androidx.paging.PagingState
 import com.santimattius.moviedb.TheMovieDbClient
 import com.santimattius.paging.data.data.asDomainModel
 import com.santimattius.paging.domain.entities.Tv
@@ -10,9 +11,10 @@ class TvPagingSource(private val client: TheMovieDbClient) : PagingSource<Int, T
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Tv> {
         return try {
-            val nextPage = params.key ?: 1
+            val nextPage = params.key ?: FIST_PAGE
             val response = client.getTvPopular(nextPage)
-            delay(2000) //delay to show paging indicator
+            //delay to show paging indicator
+            delay(2000)
             LoadResult.Page(
                 data = response.results.map { it.asDomainModel() },
                 prevKey = if (nextPage == 1) null else nextPage - 1,
@@ -21,5 +23,13 @@ class TvPagingSource(private val client: TheMovieDbClient) : PagingSource<Int, T
         } catch (e: Exception) {
             LoadResult.Error(e)
         }
+    }
+
+    override fun getRefreshKey(state: PagingState<Int, Tv>): Int? {
+        return FIST_PAGE
+    }
+
+    companion object {
+        private const val FIST_PAGE = 1
     }
 }
