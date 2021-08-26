@@ -13,8 +13,7 @@ import com.santimattius.paging.databinding.FragmentPopularTvShowsBinding
 import com.santimattius.paging.ui.adapter.item.PopularTvShowsAdapter
 import com.santimattius.paging.ui.adapter.load.PagingStateAdapter
 import com.santimattius.paging.ui.viewmodels.PopularTvShowsViewModel
-import org.koin.androidx.viewmodel.scope.viewModel
-import org.koin.androidx.scope.lifecycleScope as KoinScope
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PopularTvShowsFragment : Fragment() {
 
@@ -22,12 +21,14 @@ class PopularTvShowsFragment : Fragment() {
     private val popularTvShowsAdapter: PopularTvShowsAdapter by lazy {
         PopularTvShowsAdapter()
     }
-    private val viewModel: PopularTvShowsViewModel by KoinScope.viewModel(this)
+
+    private val viewModel: PopularTvShowsViewModel by viewModel()
+
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
+    ): View {
         // Inflate the layout for this fragment
         viewBinding = FragmentPopularTvShowsBinding.inflate(inflater, container, false)
         return viewBinding.root
@@ -49,7 +50,7 @@ class PopularTvShowsFragment : Fragment() {
 
         // apply paging indicator
         val adapterWithFooter = popularTvShowsAdapter.withLoadStateFooter(
-            footer = PagingStateAdapter()
+                footer = PagingStateAdapter()
         )
 
         val gridLayoutManager = GridLayoutManager(context, DEFAULT_SPAN)

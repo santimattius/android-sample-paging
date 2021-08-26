@@ -54,6 +54,7 @@ dependencies {
     //base
     implementation "androidx.core:core-ktx:$core_ktx_version"
     implementation "androidx.appcompat:appcompat:$appcompat_version"
+    implementation "androidx.fragment:fragment-ktx:$fragment_version"
     implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
     implementation "androidx.legacy:legacy-support-v4:$support_legacy_v4"
 
@@ -83,12 +84,6 @@ dependencies {
     implementation "androidx.paging:paging-runtime-ktx:$paging_version"
 
     // Koin for Android
-    implementation "org.koin:koin-android:$koin_version"
-    // or Koin for Lifecycle scoping
-    implementation "org.koin:koin-androidx-scope:$koin_version"
-    // or Koin for Android Architecture ViewModel
-    implementation "org.koin:koin-androidx-viewmodel:$koin_version"
-    // or Koin for Android Fragment Factory (unstable version)
-    implementation "org.koin:koin-androidx-fragment:$koin_version"
+    implementation "io.insert-koin:koin-android:$koin_version"
 
 }
