@@ -7,7 +7,6 @@ import com.santimattius.paging.data.datasources.factory.TvPagingSourceFactory
 import com.santimattius.paging.data.repositories.TvShowRepositoryImpl
 import com.santimattius.paging.domain.repositories.TvShowRepository
 import com.santimattius.paging.domain.usescases.GetPopularTvShows
-import com.santimattius.paging.ui.fragments.PopularTvShowsFragment
 import com.santimattius.paging.ui.viewmodels.PopularTvShowsViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named
@@ -43,9 +42,7 @@ private val usesCasesModules = module {
 }
 
 private val scopesModule = module {
-    scope(named<PopularTvShowsFragment>()) {
-        viewModel { PopularTvShowsViewModel(get()) }
-    }
+    viewModel { PopularTvShowsViewModel(get()) }
 }
 
 
