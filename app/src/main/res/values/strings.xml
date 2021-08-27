@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Paging 3.0</string>
+    <string name="retry">Retry</string>
 </resources>
