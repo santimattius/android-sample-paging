@@ -13,14 +13,16 @@ Sample implementation Paging 3.0 Library from Jetpack Component with clean archi
 - CodeLabs: https://codelabs.developers.google.com/codelabs/android-paging/#0
 
 ### Library used:
+- **Jetpack compose**: 
+  - https://developer.android.com/jetpack/compose
 - **Koin** with dependencie injector: 
   - https://insert-koin.io/
 - **Retrofit** with service client implementation: 
   - https://square.github.io/retrofit/
 - **Moshi** on json parser:
   - https://github.com/square/moshi
-- **Glide** with image loader:
-  - https://github.com/bumptech/glide
+- **Coil** with image loader:
+  - https://coil-kt.github.io/coil/compose/
 - **Kotlin coroutines** and **Kotlion Flow**
   - https://kotlinlang.org/docs/reference/coroutines-overview.html
   - https://kotlinlang.org/docs/reference/coroutines/flow.html
