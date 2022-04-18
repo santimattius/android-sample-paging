@@ -1,4 +1,4 @@
-package com.santimattius.paging.ui.state
+package com.santimattius.paging.ui.components
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.CircularProgressIndicator
@@ -51,9 +51,7 @@ fun ErrorItem(
 @Preview
 @Composable
 fun ErrorItemPreview() {
-    ErrorItem(message = "Error message") {
-
-    }
+    ErrorItem(message = "Error message") {}
 }
 
 @Preview

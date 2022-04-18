@@ -4,10 +4,12 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.santimattius.moviedb.TheMovieDbClient
 import com.santimattius.paging.data.data.asDomainModel
-import com.santimattius.paging.domain.entities.Tv
+import com.santimattius.paging.domain.Tv
 import kotlinx.coroutines.delay
 
-class TvPagingSource(private val client: TheMovieDbClient) : PagingSource<Int, Tv>() {
+class TvPagingSource(
+    private val client: TheMovieDbClient
+) : PagingSource<Int, Tv>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Tv> {
         return try {
@@ -25,7 +27,7 @@ class TvPagingSource(private val client: TheMovieDbClient) : PagingSource<Int, T
         }
     }
 
-    override fun getRefreshKey(state: PagingState<Int, Tv>): Int? {
+    override fun getRefreshKey(state: PagingState<Int, Tv>): Int {
         return FIST_PAGE
     }
 

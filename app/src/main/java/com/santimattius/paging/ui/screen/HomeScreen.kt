@@ -2,43 +2,51 @@ package com.santimattius.paging.ui.screen
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.GridCells
-import androidx.compose.foundation.lazy.LazyGridScope
-import androidx.compose.foundation.lazy.LazyVerticalGrid
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.PagingData
-import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.santimattius.paging.R
-import com.santimattius.paging.ui.state.ErrorItem
-import com.santimattius.paging.ui.state.LoadingItem
-import com.santimattius.paging.ui.viewmodels.PopularTvShowUiModel
-import com.santimattius.paging.ui.viewmodels.PopularTvShowsViewModel
 import kotlinx.coroutines.flow.Flow
+import org.koin.androidx.compose.getViewModel
 
+@ExperimentalCoilApi
 @ExperimentalFoundationApi
 @Composable
-fun HomeScreen(viewModel: PopularTvShowsViewModel) {
+fun HomeRoute(
+    viewModel: PopularTvShowsViewModel = getViewModel()
+) {
+    HomeScreen(viewModel.tvShows)
+}
+
+@ExperimentalCoilApi
+@ExperimentalFoundationApi
+@Composable
+private fun HomeScreen(data: Flow<PagingData<PopularTvShowUiModel>>) {
     Scaffold(
         topBar = {
             TopAppBar(
                 title = { Text(text = stringResource(id = R.string.app_name)) }
             )
         },
-        content = {
-            TvShowGrid(data = viewModel.tvShows)
+        content = { padding ->
+            TvShowGrid(
+                data = data,
+                modifier = Modifier.padding(padding)
+            )
         }
     )
 }
@@ -46,64 +54,62 @@ fun HomeScreen(viewModel: PopularTvShowsViewModel) {
 @ExperimentalCoilApi
 @ExperimentalFoundationApi
 @Composable
-fun TvShowGrid(data: Flow<PagingData<PopularTvShowUiModel>>) {
+fun TvShowGrid(
+    data: Flow<PagingData<PopularTvShowUiModel>>,
+    modifier: Modifier = Modifier
+) {
 
     val popularTvShows = data.collectAsLazyPagingItems()
 
-    LazyVerticalGrid(cells = GridCells.Fixed(count = 2)) {
+    LazyVerticalGrid(
+        columns = GridCells.Adaptive(dimensionResource(R.dimen.item_min_width)),
+        contentPadding = PaddingValues(dimensionResource(R.dimen.x_small)),
+        modifier = modifier
+    ) {
         items(popularTvShows.itemCount) { index ->
             popularTvShows[index]?.let {
-                Image(
-                    painter = rememberImagePainter(
-                        data = it.imageUrl,
-                        builder = {
-                            placeholder(R.drawable.ic_photo)
-                        }
-                    ),
-                    contentDescription = it.title,
+                TvShowCard(item = it)
+            }
+
+        }
+        if (popularTvShows.loadState.append == LoadState.Loading) {
+            items(2) {
+                CircularProgressIndicator(
                     modifier = Modifier
-                        .padding(all = 6.dp)
-                        .aspectRatio(ratio = 0.67f),
-                    contentScale = ContentScale.Crop
+                        .fillMaxWidth()
+                        .wrapContentWidth(Alignment.CenterHorizontally)
+                )
+                CircularProgressIndicator(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentWidth(Alignment.CenterHorizontally)
                 )
             }
-            LazyGridState(popularTvShows)
+        }
+    }
+    if (popularTvShows.loadState.refresh == LoadState.Loading) {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            CircularProgressIndicator()
         }
     }
 }
 
-@ExperimentalFoundationApi
+@ExperimentalCoilApi
 @Composable
-private fun LazyGridScope.LazyGridState(popularTvShows: LazyPagingItems<PopularTvShowUiModel>) {
-    with(popularTvShows) {
-        when {
-            loadState.refresh is LoadState.Loading -> {
-                item { LoadingItem() }
-                item { LoadingItem() }
-            }
-            loadState.append is LoadState.Loading -> {
-                item { LoadingItem() }
-                item { LoadingItem() }
-            }
-            loadState.refresh is LoadState.Error -> {
-                val e = popularTvShows.loadState.refresh as LoadState.Error
-                item {
-                    ErrorItem(
-                        message = e.error.localizedMessage!!,
-                        modifier = Modifier.fillParentMaxSize(),
-                        onClickRetry = { retry() }
-                    )
-                }
-            }
-            loadState.append is LoadState.Error -> {
-                val e = popularTvShows.loadState.append as LoadState.Error
-                item {
-                    ErrorItem(
-                        message = e.error.localizedMessage!!,
-                        onClickRetry = { retry() }
-                    )
-                }
-            }
-        }
+fun TvShowCard(item: PopularTvShowUiModel, modifier: Modifier = Modifier) {
+    Card(modifier = modifier.padding(dimensionResource(R.dimen.small))) {
+        Image(
+            painter = rememberImagePainter(data = item.imageUrl),
+            contentDescription = item.title,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(Color.LightGray)
+                .aspectRatio(ratio = 0.67f),
+        )
     }
 }

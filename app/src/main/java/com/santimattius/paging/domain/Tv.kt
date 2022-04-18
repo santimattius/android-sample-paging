@@ -1,4 +1,4 @@
-package com.santimattius.paging.domain.entities
+package com.santimattius.paging.domain
 
 data class Tv(
     val id: Int,
@@ -6,7 +6,7 @@ data class Tv(
     val overview: String,
     val originalLanguage: String,
     val genreIds: List<Int>,
-    val posterPath: String?,
+    val poster: String,
     val originCountry: List<String>,
     val backdropPath: String?,
     val originalName: String,
