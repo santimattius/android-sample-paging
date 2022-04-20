@@ -1,30 +1,26 @@
-package com.santimattius.paging.ui.viewmodels
+package com.santimattius.paging.ui.screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.map
-import com.santimattius.paging.domain.usescases.GetPopularTvShows
+import com.santimattius.paging.data.repositories.TvShowRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class PopularTvShowsViewModel(private val getPopularTvShows: GetPopularTvShows) : ViewModel() {
+class PopularTvShowsViewModel(private val repository: TvShowRepository) : ViewModel() {
 
     val tvShows: Flow<PagingData<PopularTvShowUiModel>>
-        get() = getPopularTvShows()
+        get() = repository.fetchPopularTvShows()
             .cachedIn(viewModelScope)
             .map { pagingList ->
                 pagingList.map {
                     PopularTvShowUiModel(
                         id = it.id,
                         title = it.name,
-                        imageUrl = "$BASE_IMAGE_URL${it.posterPath}"
+                        imageUrl = it.poster
                     )
                 }
             }
-
-    companion object {
-        private const val BASE_IMAGE_URL = "https://image.tmdb.org/t/p/w500"
-    }
 }

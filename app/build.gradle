@@ -1,19 +1,20 @@
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
-apply plugin: 'kotlin-android-extensions'
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+}
 
 def localProperties = new Properties()
 localProperties.load(new FileInputStream(rootProject.file("local.properties")))
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.3"
+    compileSdkVersion 32
+    buildToolsVersion "32.0.0"
 
     defaultConfig {
         applicationId "com.santimattius.paging"
-        minSdkVersion 21
-        targetSdkVersion 30
+        minSdkVersion 23
+        targetSdkVersion 32
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -22,21 +23,24 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
+        jvmTarget = JavaVersion.VERSION_11.toString()
+        useIR = true
     }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion '1.0.0'
-        kotlinCompilerVersion '1.5.10'
-    }
-
     buildFeatures {
         compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion ui_compose_version
+    }
+    packagingOptions {
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
     }
 
     buildTypes {
@@ -58,22 +62,21 @@ dependencies {
     //ui
     implementation "androidx.core:core-ktx:$core_ktx_version"
     implementation "androidx.appcompat:appcompat:$appcompat_version"
-    implementation "androidx.fragment:fragment-ktx:$fragment_version"
-    implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
-    implementation "androidx.legacy:legacy-support-v4:$support_legacy_v4"
+    implementation "com.google.android.material:material:$material_version"
 
     //compose
     implementation "androidx.compose.ui:ui:$ui_compose_version"
     implementation "androidx.compose.ui:ui-tooling:$ui_compose_version"
-    implementation "androidx.compose.compiler:compiler:$compiler_compose_version"
-    implementation "androidx.compose.material:material:$material_compose_version"
+    implementation "androidx.compose.compiler:compiler:$ui_compose_version"
+    implementation "androidx.compose.material:material:$ui_compose_version"
     implementation "androidx.activity:activity-compose:$activity_compose_version"
+    implementation "androidx.compose.material:material-icons-extended:$ui_compose_version"
 
     //lifecycle
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$viemodels_ktx_version"
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_extensions_version"
 
-    //glide version
+    //coil
     implementation "io.coil-kt:coil-compose:$coil_version"
 
     //retrofit
@@ -90,10 +93,12 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_coroutines_version"
 
     //paging
-    def paging_version = "1.0.0-alpha12"
+    def paging_version = "1.0.0-alpha14"
     implementation "androidx.paging:paging-compose:$paging_version"
 
     // Koin for Android
+    implementation "io.insert-koin:koin-core:$koin_version"
     implementation "io.insert-koin:koin-android:$koin_version"
+    implementation "io.insert-koin:koin-androidx-compose:$koin_version"
 
 }

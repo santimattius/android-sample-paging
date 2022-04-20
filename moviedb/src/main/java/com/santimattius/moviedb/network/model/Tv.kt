@@ -2,6 +2,8 @@ package com.santimattius.moviedb.network.model
 
 import com.squareup.moshi.Json
 
+private const val BASE_IMAGE_URL = "https://image.tmdb.org/t/p/w500"
+
 data class Tv(
     @Json(name = "id")
     val id: Int = 0,
@@ -14,7 +16,7 @@ data class Tv(
     @Json(name = "genre_ids")
     val genreIds: List<Int> = emptyList(),
     @Json(name = "poster_path")
-    val posterPath: String?,
+    private val posterPath: String?,
     @Json(name = "origin_country")
     val originCountry: List<String> = emptyList(),
     @Json(name = "backdrop_path")
@@ -29,4 +31,8 @@ data class Tv(
     val name: String = "",
     @Json(name = "vote_count")
     val voteCount: Int = 0
-)
+) {
+
+    val poster: String
+        get() = "$BASE_IMAGE_URL${posterPath}"
+}
