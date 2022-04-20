@@ -49,7 +49,7 @@ private fun HomeScreen(data: Flow<PagingData<PopularTvShowUiModel>>) {
             )
         },
         content = { padding ->
-            TvShowGrid(
+            GridOfItems(
                 data = data,
                 modifier = Modifier.padding(padding)
             )
@@ -59,7 +59,7 @@ private fun HomeScreen(data: Flow<PagingData<PopularTvShowUiModel>>) {
 
 @ExperimentalCoilApi
 @Composable
-fun TvShowGrid(
+fun GridOfItems(
     data: Flow<PagingData<PopularTvShowUiModel>>,
     modifier: Modifier = Modifier
 ) {
