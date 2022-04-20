@@ -2,7 +2,7 @@
   <img src="https://github.com/santimattius/android-sample-paging/blob/master/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png" alt="App Icon"/>
 </p>
 
-# Android Paging 3.0
+# Android Paging 3.0 with Jetpack Compose
 
 ## Description
 
