@@ -9,6 +9,12 @@
 Sample implementation Paging 3.0 Library from Jetpack Component, using TheMovieDb
 API https://developers.themoviedb.org/4/getting-started/
 
+<p align="center">
+  <img width="400" src="https://github.com/santimattius/android-sample-paging/blob/master/screenshot/android_paging_light.png?raw=true" alt="App Capture"/>
+  <img width="400" src="https://github.com/santimattius/android-sample-paging/blob/master/screenshot/android_paging_dark.png?raw=true" alt="App Capture"/>
+</p>
+
+
 ## Official documentation:
 
 - Paging 3 library
@@ -27,4 +33,10 @@ API https://developers.themoviedb.org/4/getting-started/
 ### Setup TheMovieDb apikey on project
 
 Add apiKey variable on local.properties with your api key string.
+
+
+
+https://user-images.githubusercontent.com/22333101/164337420-7e6741ac-a58f-4843-89a3-da048a8a7351.mov
+
+
   
